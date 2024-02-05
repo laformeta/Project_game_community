@@ -1,0 +1,13 @@
+package com.cogamers;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class CoGamersApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
