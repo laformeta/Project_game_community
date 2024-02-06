@@ -13,6 +13,6 @@ public class HomepageController {
 		
 		model.addAttribute("viewName", "homepage/homepage");
 		
-		return "test/test";
+		return "template/layout";
 	}
 }
