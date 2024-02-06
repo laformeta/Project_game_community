@@ -25,14 +25,14 @@
 </head>
 <body>
 	<div id="wrap">
-		<header class="bg-info">
+		<header class="bg-danger">
 			<jsp:include page="../include/header.jsp" />
 		</header>
 		<section class="contents">
 			<jsp:include page="../${viewName}.jsp" />
 		</section>
-		<footer>
-		
+		<footer class="bg-danger">
+			<jsp:include page="../include/footer.jsp" />
 		</footer>
 	</div>
 </body>
