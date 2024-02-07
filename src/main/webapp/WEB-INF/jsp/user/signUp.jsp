@@ -41,7 +41,8 @@
 							<option value="daum">daum.net</option>
 							<option value="google">google.com</option>
 						</select>
-					</div>
+					</div><br>
+					<button type="button" id="sendEmailCertificationBtn" class="btn btn-success">인증번호 전송</button>
 					</td>
 				</tr>
 				<tr>
