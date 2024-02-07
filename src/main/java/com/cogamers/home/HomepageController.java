@@ -12,7 +12,7 @@ public class HomepageController {
 	public String homepageView(Model model) {
 		
 		model.addAttribute("viewName", "homepage/homepage");
-		
+		//
 		return "template/layout";
 	}
 }
