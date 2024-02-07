@@ -30,12 +30,31 @@
 					<td><input type="password" id="confirmPassword" class="form-control" placeholder="비밀번호를 입력하세요."></td>
 				</tr>
 				<tr>
+					<th>* 이메일</th>
+					<td>
+					<div class="d-flex align-items-center">
+						<input type="text" id="email" name="email" class="form-control" placeholder="이메일 주소를 입력하세요.">
+						@
+						<select name="emailSelect" id="emailSelect" class="form-control">
+							<option>----주소를 선택하세요----</option>
+							<option value="naver">naver.com</option>
+							<option value="daum">daum.net</option>
+							<option value="google">google.com</option>
+						</select>
+					</div>
+					</td>
+				</tr>
+				<tr>
+					<th>* 이메일 인증번호</th>
+					<td><input type="text" id="certificationNumber" name="certificationNumber" class="form-control"></td>
+				</tr>
+				<tr>
 					<th>* 이름</th>
 					<td><input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력하세요."></td>
 				</tr>
 				<tr>
-					<th>* 이메일</th>
-					<td><input type="text" id="email" name="email" class="form-control" placeholder="이메일 주소를 입력하세요."></td>
+					<th>* 닉네임</th>
+					<td><input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임을 입력하세요."></td>
 				</tr>
 			</table>
 			<br>
@@ -44,3 +63,6 @@
 		</form>
 	</div>
 </div>
+<script>
+	
+</script>
