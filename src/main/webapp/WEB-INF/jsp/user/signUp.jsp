@@ -6,7 +6,7 @@
 		<form id="signUpForm" method="post" action="/user/sign-up">
 			<table class="sign-up-table table table-bordered">
 				<tr>
-					<th>* 아이디(4자 이상)<br></th>
+					<th>* 아이디<br></th>
 					<td>
 						<%-- 인풋박스 옆에 중복확인을 붙이기 위해 div를 하나 더 만들고 d-flex --%>
 						<div class="d-flex">
@@ -16,7 +16,7 @@
 						
 						<%-- 아이디 체크 결과 --%>
 						<%-- d-none 클래스: display none (보이지 않게) --%>
-						<div id="idCheckLength" class="small text-danger d-none">ID를 4자 이상 입력해주세요.</div>
+						<div id="idCheckLength" class="small text-danger d-none">ID를 6자 이상 입력해주세요.</div>
 						<div id="idCheckDuplicated" class="small text-danger d-none">이미 사용중인 ID입니다.</div>
 						<div id="idCheckOk" class="small text-success d-none">사용 가능한 ID 입니다.</div>
 					</td>
@@ -65,5 +65,46 @@
 	</div>
 </div>
 <script>
-	
+	$(document).ready(function() {
+		$("#loginId").on('keyup', function() {
+			// alert("클릭");
+			// 경고 문구 초기화
+			$('#idCheckLength').addClass('d-none');
+			$('#idCheckDuplicated').addClass('d-none');
+			$('#idCheckOk').addClass('d-none');
+			
+			let loginId = $('#loginId').val().trim();
+			if (loginId.length < 6) {
+				$('#idCheckLength').removeClass('d-none');
+				return;
+			}
+			
+			$.ajax({
+				url:"/user/is-duplicated-id"
+				, data: {"loginId":loginId}
+			
+				, success: function(data) {
+					if (data.is_duplicated_id/*true*/) {
+						$('#idCheckDuplicated').removeClass('d-none');
+					} else {
+						// 중복 아님 => 사용 가능
+						$('#idCheckOk').removeClass('d-none');
+					}
+				}
+				, error: function(request, status, error) {
+					alert(data.error_message);
+				}
+			}); // loginIdCheckBtn AJAX
+			
+		}); // loginIdCheckBtn click
+		
+		$("#sendEmailCertificationBtn").on('click', function() {
+			//alert("클릭");
+		}); // sendEmailCertificationBtn click
+		
+		$("#signUpBtn").on('click', function(e) {
+			//alert("클릭");
+			e.preventDefault();
+		}); // signUpBtn click
+	}); // document
 </script>
