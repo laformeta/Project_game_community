@@ -34,21 +34,15 @@
 					<td>
 					<div class="d-flex align-items-center">
 						<input type="text" id="email" name="email" class="form-control" placeholder="이메일 주소를 입력하세요.">
-						@
-						<select name="emailSelect" id="emailSelect" class="form-control">
-							<option>----주소를 선택하세요----</option>
-							<option value="naver">naver.com</option>
-							<option value="daum">daum.net</option>
-							<option value="google">google.com</option>
-						</select>
-					</div><br>
-					<button type="button" id="sendEmailCertificationBtn" class="btn btn-success">인증번호 전송</button>
+					</div>
+<!-- 					<br> -->
+<!-- 					<button type="button" id="sendEmailCertificationBtn" class="btn btn-success">인증번호 전송</button> -->
 					</td>
 				</tr>
-				<tr>
-					<th>* 이메일 인증번호</th>
-					<td><input type="text" id="certificationNumber" name="certificationNumber" class="form-control"></td>
-				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>* 이메일 인증번호</th> -->
+<!-- 					<td><input type="text" id="certificationNumber" name="certificationNumber" class="form-control"></td> -->
+<!-- 				</tr> -->
 				<tr>
 					<th>* 이름</th>
 					<td><input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력하세요."></td>
@@ -98,13 +92,75 @@
 			
 		}); // loginIdCheckBtn click
 		
-		$("#sendEmailCertificationBtn").on('click', function() {
-			//alert("클릭");
-		}); // sendEmailCertificationBtn click
+// 		$("#sendEmailCertificationBtn").on('click', function() {
+// 			//alert("클릭");
+// 		}); // sendEmailCertificationBtn click
 		
-		$("#signUpBtn").on('click', function(e) {
-			//alert("클릭");
+		$('#signUpForm').on('submit', function(e) {
+			alert("클릭");
 			e.preventDefault();
+			
+			// validation check
+			let loginId = $("#loginId").val().trim();
+			let password = $("#password").val();
+			let confirmPassword = $("#confirmPassword").val();
+			let name = $("#name").val().trim();
+			let email = $("#email").val().trim();
+			
+			if (!loginId) {
+				alert("아이디를 입력하세요.");
+				return false;
+			}
+			
+			if (!password || !confirmPassword) {
+				alert("비밀번호를 입력하세요.");
+				return false;
+			}
+			
+			if (password != confirmPassword) {
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			}
+			
+			if (!name) {
+				alert("이름을 입력하세요.");
+				return false;
+			}
+			
+			if (!email) {
+				alert("이메일을 입력하세요.");
+				return false;
+			}
+			
+			// 중복확인 후 사용 가능한 아이디인지 확인
+			// => idCheckOk 클래스 d-none이 없을 때
+			if ($("#idCheckOk").hasClass('d-none')) {
+				alert("아이디 중복확인을 다시 해주세요.");
+				return false;
+			}
+			
+			//alert("회원가입");
+			
+			// 1) 서버 전송: submit을 js에서 동작시킴
+			//$(this)[0].submit(); // 화면 이동이 된다.
+			
+			// 2) AJAX: 화면 이동 되지 않음(콜백함수에서 이동) 응답값 JSON
+			let url = $(this).attr("action");
+			//alert(url);
+			let params = $(this).serialize(); // 폼태그에 있는 name 속성과 값으로 파라미터를 구성
+			console.log(params);
+			
+			$.post(url, params)  // request
+			.done(function(data) { // response
+				// {"code":200, "result":"성공"}
+				if (data.code == 200) {
+					alert("가입을 환영합니다. 로그인 해주세요.");
+					location.href = "/user/sign-in-view"; // 로그인 화면으로 이동
+				} else {
+					// 로직 실패
+					alert(data.error_message);
+				}
+			});
 		}); // signUpBtn click
 	}); // document
 </script>

@@ -5,3 +5,6 @@ footer {height:100px;}
 
 .sign-up-box {width:600px;}
 .sign-up-table th {background-color:#D8D8D8;}
+
+nav {height:40px; background-color: yellowgreen;}
+.nav-item .nav-link:hover {background-color: rgb(255, 255, 0);}
