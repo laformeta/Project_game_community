@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cogamers.common.EncryptSHA256;
+import com.cogamers.recaptcha.RecaptchaService;
 import com.cogamers.user.bo.UserBO;
 import com.cogamers.user.entity.UserEntity;
 
@@ -22,6 +23,14 @@ public class UserRestController {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private  RecaptchaService recaptchaService;
+	
+	@Autowired
+    public UserRestController(UserBO userBO) {
+        this.userBO = userBO;
+    }
 
 	/**
 	 * id 중복확인 (is-duplicated-id)
@@ -60,14 +69,23 @@ public class UserRestController {
 	 * @param email
 	 * @return
 	 */
-	@PostMapping("/sign-up")
+	@PostMapping("/api/sign-up")
 	public Map<String, Object> signUp(
 			@RequestParam("loginId") String loginId,
 			@RequestParam("password") String password, 
 			@RequestParam("name") String name,
 			@RequestParam("nickname") String nickname,
-			@RequestParam("email") String email) {
+			@RequestParam("email") String email,
+			@RequestParam("g-recaptcha-response") String recaptchaResponse) {
 
+		 // reCAPTCHA 검증
+        if (!recaptchaService.verifyRecaptcha(recaptchaResponse)) {
+            Map<String, Object> errorResult = new HashMap<>();
+            errorResult.put("code", 500);
+            errorResult.put("error_message", "reCAPTCHA 검증에 실패했습니다.");
+            return errorResult;
+        }
+		
 		// 비밀번호 해싱
 		String hashedPassword = EncryptSHA256.testSHA256(password);
 

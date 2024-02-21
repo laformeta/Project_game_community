@@ -3,15 +3,19 @@
 <div class="d-flex justify-content-center">
 	<div class="sign-up-box">
 		<h1 class="mb-4">회원가입</h1>
-		<form id="signUpForm" method="post" action="/user/sign-up">
+		<form id="signUpForm" method="post" action="/user/api/sign-up">
+		 <!-- reCAPTCHA -->
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            <div class="g-recaptcha" data-sitekey="6LfGKnkpAAAAAGRroi3dVQdX4KiMtj0z8YXsa5_e"></div>
+            <div class="text-danger">${recaptchaError}</div>
+		
 			<table class="sign-up-table table table-bordered">
 				<tr>
 					<th>* 아이디<br></th>
 					<td>
 						<%-- 인풋박스 옆에 중복확인을 붙이기 위해 div를 하나 더 만들고 d-flex --%>
 						<div class="d-flex">
-							<input type="text" id="loginId" name="loginId" class="form-control col-9" placeholder="아이디를 입력하세요.">
-							<button type="button" id="loginIdCheckBtn" class="btn btn-success">중복확인</button><br>
+							<input type="text" id="loginId" name="loginId" class="form-control" placeholder="아이디를 입력하세요.">
 						</div>
 						
 						<%-- 아이디 체크 결과 --%>
@@ -97,8 +101,15 @@
 // 		}); // sendEmailCertificationBtn click
 		
 		$('#signUpForm').on('submit', function(e) {
-			alert("클릭");
+			//alert("클릭");
 			e.preventDefault();
+			
+			  // reCAPTCHA 확인
+            let recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse || recaptchaResponse === "") {
+                alert("reCAPTCHA를 완료해주세요.");
+                return false;
+            }
 			
 			// validation check
 			let loginId = $("#loginId").val().trim();
