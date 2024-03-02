@@ -1,7 +1,6 @@
 package com.cogamers.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +12,9 @@ import com.cogamers.aop.TimeTrace;
 import com.cogamers.recaptcha.RecaptchaService;
 import com.cogamers.user.bo.UserBO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
-@Component("userController")
 @RequestMapping("/user")
 public class UserController {
 
@@ -75,6 +75,17 @@ public class UserController {
 	public String signInView(Model model) {
 		model.addAttribute("viewName", "user/signIn");
 		return "template/layout";
+	}
+	
+	@RequestMapping("/sign-out")
+	public String signOut(HttpSession session) {
+		// 세션을 모두 비운다.
+		session.removeAttribute("userId");
+		session.removeAttribute("userLoginId");
+		session.removeAttribute("userNickname");
+		
+		// 로그인 화면으로 이동
+		return "redirect:/user/sign-in-view";
 	}
 	
 	@GetMapping("/withdrawal-view")

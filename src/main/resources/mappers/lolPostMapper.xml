@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.cogamers.post.mapper.LolPostMapper">
+ 	<select id="selectPostList" resultType="map">
+		SELECT
+			*
+		FROM
+			`lol_post`
+	</select>
+ 	<select id="selectAllLolPost" resultType="map">
+		SELECT
+			*
+		FROM
+			`lol_post`
+	</select>
+	<select id="selectLolPostByPostIdUserId" parameterType="map" resultType="com.cogamers.post.domain.LolPost">
+		SELECT
+			`id`
+			,`userId`
+			,`nickname`
+			,`subject`
+			,`content`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`lol_post`
+		WHERE
+			`userId` = #{userId}
+			AND `id` = #{postId}
+	</select>
+	<select id="selectLolPostByPostId" parameterType="map" resultType="com.cogamers.post.domain.LolPost">
+		SELECT
+			`id`
+			,`userId`
+			,`nickname`
+			,`subject`
+			,`content`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`lol_post`
+		WHERE
+			`id` = #{postId}
+	</select>
+	<select id="selectAllLolPostByCategory" parameterType="String" resultType="map">
+		SELECT
+			*
+		FROM
+			`lol_post`
+		WHERE
+			`category` = #{category}
+	</select>
+	
+ 	<insert id="insertLolPost" parameterType="map">
+		INSERT INTO `lol_post`
+		(
+			`userId`
+			,`nickname`
+			,`subject`
+			,`content`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{nickname}
+			, #{subject}
+			, #{content}
+			, #{category}
+			, #{imagePath}
+			, NOW()
+			, NOW()
+		)	
+	</insert>
+	<update id="updateLolPostByPostId" parameterType="map">
+		UPDATE `lol_post`
+		SET
+			`subject` = #{subject}
+			, `content` = #{content}
+			, `category` = #{category}
+			<if test="imagePath != null">
+			, `imagePath` = #{imagePath}
+			</if>
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{postId}
+	</update>
+	<delete id="deleteLolPostByPostId" parameterType="int">
+		DELETE
+		FROM
+			`lol_post`
+		WHERE
+			`id` = #{postId}
+	</delete>
+ </mapper>

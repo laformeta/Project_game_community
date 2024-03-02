@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>커뮤니티</title>
 
 <%-- bootstrap --%>
 <!-- bootstrap -->
@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<header class="bg-danger">
+		<header class="bg-warning">
 			<jsp:include page="../include/header.jsp" />
 		</header>
 		<section class="contents">

@@ -44,6 +44,7 @@ dependencies {
 	//	리캡차 사용을 위한 json
 	implementation 'javax.json:javax.json-api:1.1.2'
 	implementation 'org.glassfish:javax.json:1.1'
+	implementation 'javax.servlet:jstl:1.2'
 }
 
 tasks.named('test') {

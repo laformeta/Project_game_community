@@ -125,7 +125,7 @@ public class UserRestController {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userLoginId", user.getLoginId());
-			session.setAttribute("userName", user.getName());
+			session.setAttribute("userNickname", user.getNickname());
 			
 			result.put("code", 200);
 			result.put("result", "성공");
