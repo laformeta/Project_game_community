@@ -12,4 +12,5 @@ public interface RecommandMapper {
 	
 	public int selectRecommandCountByPostId(int postId);
 	
+	public void deleteRecommandByPostId(int postId);
 }

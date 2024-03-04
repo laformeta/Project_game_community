@@ -30,7 +30,6 @@
 					<th>제목</th>
 					<th>등록일</th>
 					<th>수정일</th>
-					<th>추천</th>
 				</tr>
 			</thead>
 			<tbody id="postTable">
@@ -45,7 +44,6 @@
 								pattern="yyyy년 M월 d일 HH:mm:ss" /></td>
 						<td><fmt:formatDate value="${post.updatedAt}"
 								pattern="yyyy년 M월 d일 HH:mm:ss" /></td>
-						<td class="recommandCount">${post.recommandCount}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

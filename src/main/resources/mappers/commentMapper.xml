@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.cogamers.comment.mapper.CommentMapper">
+ <insert id="insertComment" parameterType="map">
+ 		INSERT INTO `comment`
+ 		(
+ 			`lolPostId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{lolPostId}
+ 			, #{userId}
+ 			, #{content}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ 	<select id="selectCommentList" resultType="com.cogamers.comment.domain.Comment">
+ 		SELECT
+ 			`id`
+			, `lolPostId`
+			, `userId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`comment`
+ 	</select>
+ 	<select id="selectCommentListByLolPostId" parameterType="int" resultType="com.cogamers.comment.domain.Comment">
+ 		SELECT
+ 			`id`
+			, `lolPostId`
+			, `userId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`comment`
+		WHERE
+			`lolPostId` = #{lolPostId}
+	</select>
+	<delete id="deleteCommentById" parameterType="int">
+		DELETE
+		FROM	
+			`comment`
+		WHERE
+			`id` =  #{id}
+	</delete>
+	<delete id="deleteCommentByLolPostId" parameterType="int">
+		DELETE
+		FROM
+			`comment`
+		WHERE
+			`lolPostId` = #{lolPostId}
+	</delete>
+ </mapper>

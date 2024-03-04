@@ -25,4 +25,11 @@
 		WHERE
 			`postId` = #{postId}
 	</select>
+	<delete id="deleteNoRecommandByPostId">
+		DELETE
+		FROM
+			`no_recommand`
+		WHERE
+			`postId` = #{postId}
+	</delete>
  </mapper>

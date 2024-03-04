@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cogamers.comment.bo.CommentBO;
+import com.cogamers.comment.domain.Comment;
+import com.cogamers.comment.domain.CommentView;
 import com.cogamers.post.bo.LolPostBO;
 import com.cogamers.post.domain.LolPost;
 
@@ -21,6 +24,9 @@ public class PostController {
 	
 	@Autowired
 	private LolPostBO lolPostBO;
+	
+	@Autowired
+	private CommentBO commentBO;
 
 	@GetMapping("/post-list-view")
 	public String postListView(
@@ -28,8 +34,9 @@ public class PostController {
 			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
 			@RequestParam(value = "code",required = false) String code,
 			Model model) {
-	    List<LolPost> postList;
-
+	    List<LolPost> postList= lolPostBO.getAllLolPost();
+	    
+	    
 	    if (!keyword.isEmpty()) {
 	        // 키워드가 존재하는 경우, 검색 기능 사용
 	        postList = lolPostBO.getLolPostsByKeyword(keyword);
@@ -43,9 +50,7 @@ public class PostController {
 	            postList = lolPostBO.getAllLolPostByCategory(category);
 	        }
 	    }
-	    if(code!=null){//카카오측에서 보내준 code가 있다면 출력합니다
-			 model.addAttribute("code", code);
-	        }
+	   
 
 	    model.addAttribute("postList", postList);
 	    model.addAttribute("viewName", "post/postList");
@@ -80,8 +85,14 @@ public class PostController {
 		int noRecommandCount =lolPostBO.getNoRecommandCount(postId);
 		lolPost.setNoRecommandCount(noRecommandCount);
 		
+		// 댓글들
+		List<CommentView> commentList = commentBO.generateCommentViewListByPostId(postId);
+		lolPost.setCommentList(commentList);
+		
 		model.addAttribute("lolPost", lolPost);
 		model.addAttribute("viewName", "post/postDetail");
+		
+		
 		
 		// 현재 로그인한 사용자의 ID를 세션에서 가져와서 모델에 추가
         Integer userId = (Integer) session.getAttribute("userId");

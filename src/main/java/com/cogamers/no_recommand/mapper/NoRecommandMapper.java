@@ -11,4 +11,6 @@ public interface NoRecommandMapper {
 			@Param("userId") int userId);
 	
 	public int selectNoRecommandCountByPostId(int postId);
+	
+	public void deleteNoRecommandByPostId(int postId);
 }

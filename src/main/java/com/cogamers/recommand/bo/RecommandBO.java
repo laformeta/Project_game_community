@@ -20,4 +20,8 @@ public class RecommandBO {
 		public int getRecommandCountByPostId(int postId) {
 			return recommandMapper.selectRecommandCountByPostId(postId);
 		}
+		
+		public void deleteRecommandByPostId(int postId) {
+			recommandMapper.deleteRecommandByPostId(postId);
+		}
 }

@@ -1,6 +1,5 @@
-package com.sns.comment.domain;
+package com.cogamers.comment.domain;
 
-import com.cogamers.comment.domain.Comment;
 import com.cogamers.user.entity.UserEntity;
 
 import lombok.Data;

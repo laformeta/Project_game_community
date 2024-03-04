@@ -8,3 +8,19 @@ footer {height:100px;}
 
 nav {height:40px; background-color: yellowgreen;}
 .nav-item .nav-link:hover {background-color: rgb(255, 255, 0);}
+
+/* 제목 스타일 */
+#subject {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 내용 스타일 */
+#usersContents {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}

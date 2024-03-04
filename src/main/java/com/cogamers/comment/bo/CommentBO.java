@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cogamers.comment.domain.Comment;
+import com.cogamers.comment.domain.CommentView;
 import com.cogamers.comment.mapper.CommentMapper;
 import com.cogamers.user.bo.UserBO;
 import com.cogamers.user.entity.UserEntity;
-import com.sns.comment.domain.CommentView;
 
 @Service
 public class CommentBO {
@@ -29,12 +29,12 @@ public class CommentBO {
 		return commentMapper.selectCommentList();
 	}
 	
-	public List<CommentView> generateCommentViewListByPostId(int postId) {
+	public List<CommentView> generateCommentViewListByPostId(int lolPostId) {
 		// 결과 리스트 만들기
 		List<CommentView> commentViewList = new ArrayList<>(); // []
 		
 		// 글에 해당하는 댓글 목록 가져오기 List<Comment>
-		List<Comment> commentList = commentMapper.selectCommentListByPostId(postId);
+		List<Comment> commentList = commentMapper.selectCommentListByLolPostId(lolPostId);
 		
 		// 반복문 순회 List<Comment> -> List<CommentView>  => 리스트에 넣기
 		for (Comment comment : commentList) {
@@ -59,7 +59,7 @@ public class CommentBO {
 		commentMapper.deleteCommentById(id);
 	}
 	
-	public void deleteCommentByLolPostId(int lolPostId) {
-		commentMapper.deleteCommentByLolPostId(lolPostId);
+	public void deleteCommentByLolPostId(int postId) {
+		commentMapper.deleteCommentByLolPostId(postId);
 	}
 }

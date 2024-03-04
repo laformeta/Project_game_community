@@ -21,4 +21,8 @@ public class NoRecommandBO {
 		public int getNoRecommandCountByPostId(int postId) {
 			return noRecommandMapper.selectNoRecommandCountByPostId(postId);
 		}
+		
+		public void deleteNoRecommandByPostId(int postId) {
+			noRecommandMapper.deleteNoRecommandByPostId(postId);
+		}
 }

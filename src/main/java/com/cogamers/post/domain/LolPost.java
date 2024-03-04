@@ -1,8 +1,10 @@
 package com.cogamers.post.domain;
 
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.Transient;
+import com.cogamers.comment.domain.CommentView;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -20,4 +22,6 @@ public class LolPost {
 	private Date updatedAt;
 	private int recommandCount;
 	private int noRecommandCount;
+	// 댓글들
+	private List<CommentView> commentList;
 }
