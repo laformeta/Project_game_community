@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cogamers.common.FileManagerService;
+import com.cogamers.no_recommand.bo.NoRecommandBO;
 import com.cogamers.post.domain.LolPost;
 import com.cogamers.post.mapper.LolPostMapper;
+import com.cogamers.recommand.bo.RecommandBO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +23,12 @@ public class LolPostBO {
 
 	@Autowired
 	private LolPostMapper lolPostMapper;
+	
+	@Autowired 
+	private RecommandBO recommandBO;
+	
+	@Autowired 
+	private NoRecommandBO noRecommandBO;
 
 	@Autowired
 	private FileManagerService fileManagerService;
@@ -84,6 +92,8 @@ public class LolPostBO {
 
 		lolPostMapper.insertLolPost(userId, subject, content, category, imagePath, nickname);
 	}
+	
+	
 
 	// input: 글번호, userId output: Post
 	public LolPost getLolPostByPostIdUserId(int id, int userId) {
@@ -98,10 +108,25 @@ public class LolPostBO {
 		return lolPostMapper.selectAllLolPostByCategory(category);
 	}
 	
+	public List<LolPost> getLolPostsByKeyword(String keyword) {
+		return lolPostMapper.selectLolPostsByKeyWord(keyword);
+	}
+	
 	// input: 글번호, userId output: Post
 	public List<LolPost> getAllLolPost() {
 		return lolPostMapper.selectAllLolPost();
 	}
+	
+	// 추천 개수
+	public int getRecommandCount(int postId) {
+		return recommandBO.getRecommandCountByPostId(postId);
+	}
+	
+	// 비추천 개수
+	public int getNoRecommandCount(int postId) {
+		return noRecommandBO.getNoRecommandCountByPostId(postId);
+	}
+	
 
 
 	// input:파라미터들 output:X

@@ -23,14 +23,35 @@ public class PostController {
 	private LolPostBO lolPostBO;
 
 	@GetMapping("/post-list-view")
-	public String postListView(Model model) {
-		
-		List<LolPost> postList = lolPostBO.getAllLolPost();
-		
-		model.addAttribute("postList", postList);
-		model.addAttribute("viewName", "post/postList");
-		
-		return "template/layout";
+	public String postListView(
+			@RequestParam(name = "category", required = false, defaultValue = "") String category,
+			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+			@RequestParam(value = "code",required = false) String code,
+			Model model) {
+	    List<LolPost> postList;
+
+	    if (!keyword.isEmpty()) {
+	        // 키워드가 존재하는 경우, 검색 기능 사용
+	        postList = lolPostBO.getLolPostsByKeyword(keyword);
+	    } else {
+	        // 키워드가 없는 경우, 카테고리에 따라 게시글 가져오기
+	        if (category.isEmpty() || category.equals("전체")) {
+	            // 카테고리가 선택되지 않거나 '전체'인 경우, 전체 카테고리의 게시글을 가져옴
+	            postList = lolPostBO.getAllLolPost();
+	        } else {
+	            // 선택된 카테고리에 해당하는 게시글을 가져옴
+	            postList = lolPostBO.getAllLolPostByCategory(category);
+	        }
+	    }
+	    if(code!=null){//카카오측에서 보내준 code가 있다면 출력합니다
+			 model.addAttribute("code", code);
+	        }
+
+	    model.addAttribute("postList", postList);
+	    model.addAttribute("viewName", "post/postList");
+	    
+
+	    return "template/layout";
 	}
 
 	
@@ -51,10 +72,24 @@ public class PostController {
 		// DB 조회 - postId + userId
 		LolPost lolPost = lolPostBO.getLolPostByPostId(postId);
 		
+		// 추천 개수 불러오기
+		int recommandCount = lolPostBO.getRecommandCount(postId);
+		lolPost.setRecommandCount(recommandCount);
+		
+		// 비추 개수 불러오기
+		int noRecommandCount =lolPostBO.getNoRecommandCount(postId);
+		lolPost.setNoRecommandCount(noRecommandCount);
+		
 		model.addAttribute("lolPost", lolPost);
 		model.addAttribute("viewName", "post/postDetail");
+		
+		// 현재 로그인한 사용자의 ID를 세션에서 가져와서 모델에 추가
+        Integer userId = (Integer) session.getAttribute("userId");
+        model.addAttribute("loggedInUserId", userId);
+		
 		return "template/layout";
 	}
+	
 	
 	@GetMapping("/post-edit-view/{postId}")
 	public String postEditView(@PathVariable("postId") int postId, Model model, HttpSession session) {

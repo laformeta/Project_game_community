@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.hibernate.annotations.Parent;
 
 import com.cogamers.post.domain.LolPost;
 
@@ -46,6 +47,9 @@ public interface LolPostMapper {
 	
 	public LolPost selectLolPostByPostId(
 			@Param("postId") int postid);
+	
+	public List<LolPost> selectLolPostsByKeyWord(
+			@Param("keyword") String keyword);
 	
 	
 	public void updateLolPostByPostId(

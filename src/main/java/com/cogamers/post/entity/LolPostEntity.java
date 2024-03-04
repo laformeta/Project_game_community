@@ -1,6 +1,7 @@
-package com.cogamers.user.entity;
+package com.cogamers.post.entity;
 
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,32 +22,32 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Builder
-@Table(name = "user")
+@Table(name = "lol_post")
 @Entity
-public class UserEntity {
-	
+public class LolPostEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "loginId")
-	private String loginId;
-	
-	private String password;
-	private String name;
+	@Column(name = "userId")
+	private int userId;
 	private String nickname;
+	private String subject;
+	private String content;
+	private String category;
 	
-	@Column(name = "email")
-	private String email;
+	@Column(name = "imagePath")
+	private String imagePath;
 	
-	@Column(name = "oauth")
-	private String oauth;
-	
+
 	@UpdateTimestamp
-	@Column(name = "createdAt", updatable = false)
+	@Column(name = "createdAt")
 	private ZonedDateTime createdAt;
 	
 	@UpdateTimestamp
 	@Column(name = "updatedAt")
 	private ZonedDateTime updatedAt;
+	private int recommandCount;
+	private int noRecommandCount;
 }

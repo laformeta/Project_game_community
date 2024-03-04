@@ -80,6 +80,25 @@
 			, NOW()
 		)	
 	</insert>
+	<select id="selectLolPostsByKeyWord" parameterType="String" resultType="map">
+		SELECT
+			`id`
+			,`userId`
+			,`nickname`
+			,`subject`
+			,`content`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`lol_post`
+		WHERE
+		<if test="keyword != null and keyword != ''">
+            `subject` LIKE CONCAT('%', #{keyword}, '%') OR
+            `content` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+	</select>
 	<update id="updateLolPostByPostId" parameterType="map">
 		UPDATE `lol_post`
 		SET

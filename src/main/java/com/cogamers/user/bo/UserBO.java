@@ -1,5 +1,7 @@
 package com.cogamers.user.bo;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,12 @@ public class UserBO {
 	private UserRepository userRepository;
 	
 	public UserEntity getUserEntityByLoginId(String loginId ) {
-		return userRepository.findByLoginId(loginId);
+		UserEntity userEntity = userRepository.findByLoginId(loginId);
+		return userEntity;
 	}
 	
 	// input:4개 파라미터 output:id(pk)
-		public Integer addUser(String loginId, String password, String name, String nickname, String email) {
+		public Integer addUser(String loginId, String password, String name, String nickname, String email, String ouath) {
 			// UserEntity = save(UserEntity);
 			UserEntity userEntity = userRepository
 					.save(UserEntity.builder()
@@ -25,7 +28,9 @@ public class UserBO {
 							.password(password)
 							.name(name)
 							.nickname(nickname)
-							.email(email).build());
+							.email(email)
+							.oauth(ouath)
+							.build());
 
 			return userEntity == null ? null : userEntity.getId();
 		}
@@ -40,4 +45,10 @@ public class UserBO {
 		public UserEntity getUserEntityById(int id) {
 			return userRepository.findById(id).orElse(null);
 		}
+
+		public UserEntity getUserEntityByLoginIdNameOauth(String loginId, String name, String oauth) {
+			return userRepository.findByLoginIdAndNameAndOauth(loginId, name, oauth);
+		}
+		
 }
+ 
