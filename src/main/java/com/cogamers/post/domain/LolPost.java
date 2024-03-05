@@ -20,6 +20,7 @@ public class LolPost {
 	private String imagePath;
 	private Date createdAt;
 	private Date updatedAt;
+	private String keyword;
 	private int recommandCount;
 	private int noRecommandCount;
 	// 댓글들

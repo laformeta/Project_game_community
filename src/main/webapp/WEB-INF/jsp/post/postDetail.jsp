@@ -28,6 +28,7 @@
 
 		<div class="d-flex justify-content-end my-2">
 
+			
 			<div>
 				<a href="/post/post-list-view" class="btn btn-dark">목록</a>
 			</div>
@@ -201,7 +202,7 @@
 			$("#confirmModal").modal('hide');
 		});
 
-		// 댓글 쓰기
+		// 	 쓰기
 		$(".comment-btn").on('click', function() {
 			//alert("댓글 쓰기");
 			let userId = $(this).data("user-id");
@@ -246,5 +247,6 @@
 				}
 			});
 		});
-	});
+
+	});//document
 </script>

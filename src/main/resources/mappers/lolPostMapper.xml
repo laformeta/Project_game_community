@@ -93,8 +93,8 @@
 			,`updatedAt`
 		FROM
 			`lol_post`
+		<if test="keyword != null or keyword != ''">
 		WHERE
-		<if test="keyword != null and keyword != ''">
             `subject` LIKE CONCAT('%', #{keyword}, '%') OR
             `content` LIKE CONCAT('%', #{keyword}, '%')
         </if>

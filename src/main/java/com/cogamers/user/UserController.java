@@ -184,6 +184,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 
+		log.info("####필요한 토큰키 : {}#####", oauthToken.getAccess_token());
 		log.info("####내 사이트 아이디 : {}#####", kakaoProfile.getKakao_account().getEmail());
 		log.info("####내 사이트 비밀번호 : {}#####", cosKey);
 		log.info("####내 사이트 이름 : {}#####", kakaoProfile.getProperties().getNickname());

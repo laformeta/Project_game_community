@@ -50,95 +50,80 @@
 		</table>
 
 		<div class="d-flex justify-content-end">
-			 <!-- 검색어 입력 폼 -->
-            <form id="searchForm">
-                <input type="text" id="searchKeyword" name="keyword" placeholder="검색어를 입력하세요">
-                <button type="button" id="searchButton">검색</button>
-            </form>
+			<!-- 검색어 입력 폼 -->
+			<div class="d-flex">
+				<div>
+					<input type="text" id="searchKeyword" class="keyword-input"
+						name="keyword" placeholder="검색어를 입력하세요">
+					<button type="button"
+						class="comment-btn btn btn-light searchButton"
+						">검색</button>
+				</div>
+				<div>
 
-			<!-- 글쓰기 버튼 -->
-			<a href="/post/post-create-view" class="btn btn-info">글쓰기</a>
+					<!-- 글쓰기 버튼 -->
+					<a href="/post/post-create-view" class="btn btn-info">글쓰기</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(document).ready(function() {
-		 // 엔터 키 입력 시 검색 수행
-        $("#searchKeyword").keypress(function (e) {
-            if (e.which === 13) {
-                e.preventDefault();
-                performSearch();
-            }
-        });
-		 
-        // 팝업을 띄우는 함수
-        function showAlert(message, alertClass) {
-            var alertHtml = '<div class="alert ' + alertClass + '" role="alert">' + message + '</div>';
-            $("#messageContainer").html(alertHtml);
+	// 엔터 키 입력 시 검색 수행
+		$(".searchButton").on('click', function() {
 
-            // 일정 시간이 지난 후에 팝업을 숨깁니다.
-            setTimeout(function () {
-                $("#messageContainer").empty();
-            }, 2000); // 2초 후에 숨김
-        }
-		 
-        // 검색 폼 제출 시 검색 수행
-        $("#searchForm").submit(function (e) {
-            e.preventDefault();
-            performSearch();
-        });
-        
-        function performSearch() {
-        	var keyword = encodeURIComponent($("#searchKeyword").val().trim());
-
-            if (keyword !== "") {
-                // 검색어가 있으면 검색 기능 활용
-                $.ajax({
-                    url: '/post/post-list-view',
-                    type: "get",
-                    cache: false,
-                    headers: { "cache-control": "no-cache", "pragma": "no-cache" },
-                    data: { "keyword": keyword },
-                    success: function (data) {
-                        //console.log(data);
-                        $('body').html(data);
-                    },
-                    error: function (data) {
-                        alert('error');
-                    }
-                });
-            }
-        }
-		
-		$("#category").on('change', function() {
-			var selectedCategory = $(this).val(); // select 박스에서 선택한 값 가져오기
-
-			if (selectedCategory === "") {
-				// 전체를 선택한 경우 페이지를 리로드
-				window.location.href = "/post/post-list-view";
-			} else {
-				// 선택한 카테고리에 해당하는 게시글을 가져오기
-				$.ajax({
-					url : '/post/post-list-view',
-					type : "get",
-					cache : false,
-					headers : {
-						"cache-control" : "no-cache",
-						"pragma" : "no-cache"
-					},
-					data : {
-						"category" : selectedCategory
-					},
-					success : function(data) {
-						//console.log(data);
-						$('body').html(data);
-					},
-					error : function(data) {
-						alert('error');
-					}
-				});
-			}
+		//let keyword = $(this).data("keyword");
+		let keyword = $(this).siblings("keyword").val();
+		console.log("Keyword: ", keyword);
 		});
-	});
+
+
+						$("#category").on('change', function() {
+							var selectedCategory = $(this).val(); // select 박스에서 선택한 값 가져오기
+
+							if (selectedCategory === "") {
+								// 전체를 선택한 경우 페이지를 리로드
+								window.location.href = "/post/post-list-view";
+							} else {
+								// 선택한 카테고리에 해당하는 게시글을 가져오기
+								$.ajax({
+									url : '/post/post-list-view',
+									type : "get",
+									cache : false,
+									headers : {
+										"cache-control" : "no-cache",
+										"pragma" : "no-cache"
+									},
+									data : {
+										"category" : selectedCategory
+									},
+									success : function(data) {
+										//console.log(data);
+										$('body').html(data);
+									},
+									error : function(data) {
+										alert('error');
+									}
+								});
+							}
+						});
+						
+						// 엔터 키 입력 시 검색 수행
+					    $(".searchButton").on('click', function() {
+					        // 입력 필드에서 키워드 가져오기
+					        let keyword = $("#searchKeyword").val().trim();
+					        console.log(keyword);
+
+					        // 키워드가 비어 있지 않은지 확인
+					        if (keyword !== "") {
+					            // 키워드를 쿼리 매개변수로 사용하여 검색 URL로 리다이렉트
+					            window.location.href = "/post/post-list-view?keyword=" + encodeURIComponent(keyword);
+					        } else {
+					            // 키워드가 비어 있으면 알림 표시
+					            showAlert("검색어를 입력하세요.", "alert-danger");
+					        }
+					    });
+					});//document
 </script>

@@ -11,7 +11,11 @@
 	<!-- 로그인 정보 -->
 	<div>
 	<!-- 로그인 시 -->
+			
 		<c:if test="${not empty userId}">
+		<c:if test="${lolPost.userId == loggedInUserId}">
+				<a href="#">회원정보수정</a>
+			</c:if>
 			<span>${userNickname}님 안녕하세요!</span>
 			<a href="/user/sign-out">로그아웃</a>
 		</c:if>
