@@ -32,7 +32,6 @@ public class PostController {
 	public String postListView(
 			@RequestParam(name = "category", required = false, defaultValue = "") String category,
 			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
-			@RequestParam(value = "code",required = false) String code,
 			Model model) {
 	    List<LolPost> postList= lolPostBO.getAllLolPost();
 	    

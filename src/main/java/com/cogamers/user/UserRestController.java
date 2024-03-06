@@ -97,7 +97,6 @@ public class UserRestController {
 			@RequestParam("name") String name,
 			@RequestParam("nickname") String nickname,
 			@RequestParam("email") String email,
-			@RequestParam("oauth") String oauth,
 			@RequestParam("g-recaptcha-response") String recaptchaResponse) {
 
 		 // reCAPTCHA 검증
@@ -112,6 +111,7 @@ public class UserRestController {
 		String hashedPassword = EncryptSHA256.testSHA256(password);
 
 		// db insert
+		String oauth ="";
 		Integer userId = userBO.addUser(loginId, hashedPassword, name, nickname, email, oauth);
 
 		Map<String, Object> result = new HashMap<>();

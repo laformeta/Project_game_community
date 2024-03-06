@@ -14,7 +14,9 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecaptchaService {
@@ -33,6 +35,9 @@ public class RecaptchaService {
 	            String postParams = "secret=" + secretKey + "&response=" + recaptcha;
 	            con.setDoOutput(true);
 
+	            log.info("***********시크릿키 = {}", secretKey);
+	            log.info("***********url = {}", url);
+	            log.info("***********response키 = {}", postParams);
 	            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 	            wr.writeBytes(postParams);
 	            wr.flush();

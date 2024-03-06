@@ -33,50 +33,7 @@ public class LolPostBO {
 	@Autowired
 	private FileManagerService fileManagerService;
 
-	// 페이징 필드
-	private static final int POST_MAX_SIZE = 3;
-
-	// input: userId(로그인 된 사람) output:List<Post>
-	public List<LolPost> getLolPostListByUserId(int userId, Integer prevId, Integer nextId) {
-		// 게시글 번호 10 9 8 | 7 6 5 | 4 3 2 | 1
-		// 만약 4 3 2 페이지에 있을 때
-		// 1) 다음: 2보다 작은 3개 DESC
-		// 2) 이전: 4보다 큰 3개 ASC(5 6 7) => List reverse(7 6 5)
-		// 3) 페이징 정보 없음: 최신순 3개 DESC
-
-		Integer standardId = null; // 기준이 되는 postId
-		String direction = null; // 방향
-		if (prevId != null) { // 2) 이전
-			standardId = prevId;
-			direction = "prev";
-
-			List<LolPost> postList = lolPostMapper.selectLolPostListByUserId(userId, standardId, direction,
-					POST_MAX_SIZE);
-
-			// reverse list 5 6 7 => 7 6 5
-			Collections.reverse(postList); // 뒤집고 저장
-
-			return postList;
-		} else if (nextId != null) { // 1) 다음
-			standardId = nextId;
-			direction = "next";
-		}
-
-		// 3) 페이징 정보 없음, 1) 다음
-		return lolPostMapper.selectLolPostListByUserId(userId, standardId, direction, POST_MAX_SIZE);
-	}
-
-	// 이전 페이지의 마지막인가?
-	public boolean isPrevLastPageByUserId(int userId, int prevId) {
-		int postId = lolPostMapper.selectLolPostIdByUserIdSort(userId, "DESC");
-		return postId == prevId; // 같으면 마지막이다.
-	}
-
-	// 다음 페이지의 마지막인가?
-	public boolean isNextLastPageByUserId(int userId, int nextId) {
-		int postId = lolPostMapper.selectLolPostIdByUserIdSort(userId, "ASC");
-		return postId == nextId; // 같으면 마지막이다.
-	}
+	
 
 	// input: params output: X
 	public void addLolPost(int userId, String userLoginId, 
