@@ -125,7 +125,7 @@ public class UserController {
 		RestTemplate rt = new RestTemplate();
 
 		// HttpHeader 오브젝트 생성
-		HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders(); //http통신을 위한 정보를 담는 오브젝트
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// HTTPBody 오브젝트 생성
@@ -137,7 +137,7 @@ public class UserController {
 
 		// httpheader와 httpbody를 하나의 오브젝트에 담기
 		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
-
+		
 		// http요청하기 - post방식 - response 변수 응답받음
 		ResponseEntity<String> response = rt.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST,
 				kakaoTokenRequest, String.class);
@@ -155,7 +155,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		// System.out.println("카카오 엑세스 토큰 : " + oauthToken.getAccess_token());
+		// log.info("카카오 엑세스 토큰 : {}": oauthToken.getAccess_token());
 
 		RestTemplate rt2 = new RestTemplate();
 
