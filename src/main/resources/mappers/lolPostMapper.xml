@@ -13,6 +13,7 @@
 			*
 		FROM
 			`lol_post`
+		ORDER BY `id` DESC
 	</select>
 	<select id="selectLolPostByPostIdUserId" parameterType="map" resultType="com.cogamers.post.domain.LolPost">
 		SELECT
@@ -54,6 +55,7 @@
 			`lol_post`
 		WHERE
 			`category` = #{category}
+		ORDER BY `id` DESC
 	</select>
 	
  	<insert id="insertLolPost" parameterType="map">
@@ -98,6 +100,7 @@
             `subject` LIKE CONCAT('%', #{keyword}, '%') OR
             `content` LIKE CONCAT('%', #{keyword}, '%')
         </if>
+        ORDER BY `id` DESC
 	</select>
 	<update id="updateLolPostByPostId" parameterType="map">
 		UPDATE `lol_post`
