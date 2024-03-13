@@ -32,7 +32,8 @@ public class PostController {
 	public String postListView(
 			@RequestParam(name = "category", required = false, defaultValue = "") String category,
 			@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
-			Model model) {
+			Model model,
+			HttpSession session) {
 	    List<LolPost> postList= lolPostBO.getAllLolPost();
 	    
 	    
@@ -50,7 +51,10 @@ public class PostController {
 	        }
 	    }
 	   
-
+		// 현재 로그인한 사용자의 ID를 세션에서 가져와서 모델에 추가
+        Integer userId = (Integer) session.getAttribute("userId");
+        model.addAttribute("userId", userId);
+	    
 	    model.addAttribute("postList", postList);
 	    model.addAttribute("viewName", "post/postList");
 	    

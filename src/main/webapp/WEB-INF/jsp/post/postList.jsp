@@ -62,7 +62,7 @@
 				<div>
 
 					<!-- 글쓰기 버튼 -->
-					<a href="/post/post-create-view" class="btn btn-info">글쓰기</a>
+					<button type="button" class="btn btn-info" data-user-id="${userId}" id="writeBtn">글쓰기</button>
 				</div>
 			</div>
 		</div>
@@ -77,6 +77,21 @@
 		//let keyword = $(this).data("keyword");
 		let keyword = $(this).siblings("keyword").val();
 		console.log("Keyword: ", keyword);
+		});
+	
+	// 글쓰기버튼 눌렀을시
+		$("#writeBtn").on('click', function() {
+			let userId = $(this).data("user-id");
+			if (!userId) {
+				// 비로그인이면 로그인 화면 이동
+				alert("로그인을 해주세요.");
+				location.href = "/user/sign-in-view";
+				return;
+			}
+			else {
+                // 로그인되어 있는 경우, 글쓰기 페이지로 이동
+                location.href = "/post/post-create-view";
+            }
 		});
 
 
