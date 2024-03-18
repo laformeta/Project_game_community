@@ -247,6 +247,28 @@
 				}
 			});
 		});
-
+		// 댓글 삭제
+		$(".comment-del-btn").on('click', function(e) {
+			e.preventDefault(); // 위로 올라감 방지
+			
+			let commentId = $(this).data("comment-id");
+			//alert(commentId);
+			
+			$.ajax({
+				type:"DELETE"
+				, url:"/comment/delete"
+				, data:{"commentId":commentId}
+				, success:function(data) {
+					if (data.code == 200) {
+						location.reload(true);
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(request, status, error) {
+					alert("댓글 삭제 하는데 실패했습니다.");
+				}
+			});
+		});
 	});//document
 </script>
