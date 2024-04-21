@@ -17,7 +17,7 @@ public class FileManagerService {
 
 	// 실제 업로드 된 이미지가 저장 될 경로(서버)
 	public static final String FILE_UPLOAD_PATH 
-	= "C:\\Users\\lafor\\Desktop\\project_gamers\\workspace_pg\\images/"; 
+	= "C:\\Users\\lafor\\OneDrive\\Desktop\\JAVA\\Project Gamers\\workspace_pg\\images/"; 
 	// input : File 원본, userLoginId(폴더명) output : 이미지 경로
 
 	public String saveFile(String loginId, MultipartFile file) {
